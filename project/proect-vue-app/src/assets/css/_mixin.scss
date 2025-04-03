@@ -1,0 +1,5 @@
+@use '_variables.scss';
+
+@mixin griid-12 {
+ grid-template-columns: repeat(12, 1fr);
+}

@@ -1,0 +1,511 @@
+@use '_variables.scss';
+@use '_mixin.scss';
+
+
+
+html {
+  box-sizing: border-box;
+
+}
+
+body {
+  font-family: 'Play', sans-serif;
+  background: variables.$bgBody;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1440px;
+  padding: 0 80px;
+  margin: 0 auto;
+}
+
+
+/*HEADER*/
+.header {
+  padding-bottom: 32px;
+
+  &__wrap {
+    padding: 24px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    margin-right: auto;
+  }
+
+  &__logo>svg {
+    width: 144px;
+    height: 32px;
+  }
+
+  &__nav {
+    margin-right: 80px;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 0 40px;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__serach {
+    width: 657px;
+    height: 48px;
+    border-radius: 8px;
+    padding: 18px 16px 16px 52px;
+    background-color: variables.$bgSecondary;
+    border: none;
+    background-image: url('/src/assets/images/svg-sprite/search.svg');
+    background-size: 24px 24px;
+    background-position: left 17px center;
+    background-repeat: no-repeat;
+  }
+
+  &__serach:focus-visible {
+    outline: none;
+    color: #fff;
+    font-size: 18px;
+    line-height: 133%;
+  }
+
+  &__serach::placeholder {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__link {
+    color: #fff;
+    font-size: 24px;
+    line-height: 133%;
+    font-weight: 400;
+  }
+}
+
+/* РЕЙТИНГ */
+
+.rating {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0 18px;
+
+  &__item {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* СТРАНИЦА ФИЛЬМА */
+
+.film {
+  &__wrap {
+    display: flex;
+  }
+
+  &__content {
+    padding-top: 74px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px 0;
+  }
+
+  &__title {
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 117%;
+    color: #fff;
+  }
+
+  &__desc {
+    margin: 0;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 133%;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &__preview-img {
+    border-radius: 18px;
+  }
+
+  &__navigation {
+    margin: 0;
+    padding: 0;
+    padding-top: 38px;
+    list-style: none;
+    display: flex;
+    gap: 0 16px;
+  }
+}
+
+.film-detail {
+  &__title {
+    margin: 0;
+    margin-bottom: 62px;
+    padding-top: 37px;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 120%;
+    color: #fff;
+  }
+
+  &__wrap {
+    width: 100%;
+    max-width: 544px;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: baseline;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    color: #fff;
+  }
+
+  &__name {
+    padding-right: 4px;
+    white-space: nowrap;
+  }
+
+  &__separaror {
+    display: block;
+    width: 100%;
+    border-bottom: 1px dashed #ffffff;
+    flex-shrink: 9;
+  }
+
+  &__desq {
+    white-space: nowrap;
+    width: 100%;
+    max-width: 220px;
+    padding-left: 4px;
+  }
+}
+
+/*  */
+
+/* TOP-10 */
+
+.top-10 {
+  padding-top: 35px;
+  padding-bottom: 120px;
+
+  &__title {
+    margin: 0;
+    padding-bottom: 65px;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 120%;
+    color: #fff;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 63px 40px;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    position: relative;
+    max-width: 224px;
+    max-height: 336px;
+  }
+
+  &__img {
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 80px 0 rgba(255, 255, 255, 0.33);
+  }
+}
+
+/* GENRES */
+
+.genres {
+  &__title {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 117%;
+    color: #fff;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    padding-top: 32px;
+    padding-bottom: 160px;
+    list-style: none;
+    display: flex;
+    gap: 64px 40px;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    width: 290px;
+    height: 304px;
+    box-shadow: 0 0 80px 0 rgba(255, 255, 255, 0.33);
+    background: #0a0b0b;
+    overflow: hidden;
+  }
+}
+
+/* PAGE GENRE */
+
+.genre {
+  &__title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 117%;
+    color: #fff;
+  }
+
+  &__link {
+    padding: 34px 12px;
+    display: flex;
+    gap: 0 30px;
+    align-items: center;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    padding-top: 28px;
+    list-style: none;
+    display: flex;
+    gap: 59px 40px;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  &__back {
+    width: 14px;
+    height: 22px;
+  }
+
+  &__btnMore {
+    display: flex;
+    justify-content: center;
+    padding-top: 64px;
+  }
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(129, 129, 129, .3);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .4s, visibility .4s;
+  overflow: auto;
+
+  &__main {
+    position: relative;
+    transform: scale(0);
+    transition: transform .8s;
+    display: flex;
+    gap: 0 24px;
+  }
+
+  &__close {
+    width: 48px;
+    height: 48px;
+  }
+
+  &__content {
+    border-radius: 24px;
+    padding: 64px 40px;
+    width: 420px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px 0;
+    margin-bottom: 24px;
+  }
+
+  .btn__accent {
+    text-align: center;
+  }
+
+  &__registration {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 133%;
+    color: #000;
+    text-align: center;
+
+  }
+
+  &__registration--title {
+    margin: 0;
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
+
+  &__registration--name {
+    display: inline-block;
+    padding-top: 24px;
+    cursor: pointer;
+  }
+
+  &__input {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 16px 16px 16px 52px;
+    width: 340px;
+    height: 56px;
+    background-size: 24px;
+    background-repeat: no-repeat;
+    background-position: left 16px center;
+  }
+
+  &__input--error {
+    border: 1px solid #ff7575;
+  }
+
+  &__input:last-child {
+    margin-bottom: 12px;
+  }
+
+  &__input--email {
+    background-image: url('/src/assets/images/svg-sprite/form_email.svg');
+  }
+
+  &__email--error {
+    background-image: url('/src/assets/images/svg-sprite/form_email_error.svg');
+  }
+
+  &__input--pass {
+    background-image: url('/src/assets/images/svg-sprite/form_pass.svg');
+  }
+
+  &__pass--error {
+    background-image: url('/src/assets/images/svg-sprite/form_pass_error.svg');
+  }
+
+  &__input--user {
+    background-image: url('/src/assets/images/svg-sprite/form_user.svg');
+  }
+
+  &__user--error {
+    background-image: url('/src/assets/images/svg-sprite/form_user_error.svg');
+  }
+
+  &__input::placeholder {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  &__input:focus-visible {
+    outline: none;
+  }
+
+  &--vis {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &--vis .modal__main {
+    transform: scale(1);
+  }
+
+  &__logo {
+    align-self: center;
+    margin-bottom: 40px;
+    width: 132px;
+    height: 29px;
+    flex-shrink: 0;
+  }
+
+  &__close {
+    cursor: pointer;
+  }
+}
+
+/* FOOTER */
+
+.footer {
+  padding-top: 43px;
+  padding-bottom: 35px;
+
+  &__wrap {
+    display: flex;
+    justify-content: end;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 0 24px;
+  }
+
+  &__link-soc>svg {
+    width: 36px;
+    height: 36px;
+  }
+}
