@@ -97,11 +97,51 @@ a {
   }
 
   &__link {
+    @include mixin.link();
+
+    &::after {
+      @include mixin.link-after();
+    }
+
+    &:hover {
+      color: #b4a9ff;
+    }
+
+    &:hover::after {
+      transform: scale(1);
+    }
+
+    &.router-link-active::after {
+      transform: scale(1);
+    }
+  }
+
+  &__link--account {
     color: #fff;
     font-size: 24px;
     line-height: 133%;
     font-weight: 400;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: 9999;
+      top: 35px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 2px;
+      background: #DC5DFC;
+      transform: scale(0);
+      transition: transform .3s linear, color .3s linear;
+    }
+
+    &:hover::after {
+      transform: scale(1);
+    }
   }
+
 }
 
 /* РЕЙТИНГ */
@@ -342,6 +382,7 @@ a {
 
 .modal {
   position: fixed;
+  z-index: 9;
   left: 0;
   top: 0;
   width: 100%;
@@ -482,6 +523,63 @@ a {
 
   &__close {
     cursor: pointer;
+  }
+
+  &__ok {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    text-align: center;
+    color: #000;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+}
+
+/* ACCOUNT */
+
+.account {
+  &__title {
+    margin-bottom: 73px;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 117%;
+    color: #fff;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0 65px;
+  }
+
+  &__link {
+    @include mixin.link();
+    display: flex;
+
+    &::after {
+      @include mixin.link-after();
+    }
+
+    &:hover {
+      color: #b4a9ff;
+    }
+
+    &:hover::after {
+      transform: scale(1);
+    }
+
+    &.router-link-active::after {
+      transform: scale(1);
+    }
+
+    &>svg {
+      align-self: center;
+      margin-right: 8px;
+    }
   }
 }
 

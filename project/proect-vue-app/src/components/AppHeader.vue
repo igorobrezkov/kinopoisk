@@ -6,18 +6,41 @@ import { RouterLink } from "vue-router";
 import { useAuthorizedStore } from "../stores/autorized";
 import { storeToRefs } from "pinia";
 import { useModalStore } from "../stores/modal";
-const { authorized } = storeToRefs(useAuthorizedStore());
+import { ref, watch } from "vue";
+import {checked } from "../api/checkedAuthorized"
+import router from "../router/router";
+const { authorized, authData } = storeToRefs(useAuthorizedStore());
 const { isVis } = storeToRefs(useModalStore());
+const changeEntry = ref<string | boolean>("Войти"); 
+changeEntry
+const isAuth = ref<boolean | string>('');
+const checkedAuth = async () => {
+  if (authData.value) {
+    changeEntry.value = authData.value.name;
+  }
+  else {
+    changeEntry.value = await checked();
+  }
+  
+}
+checkedAuth();
 
-const routeToAutorized = () => {
-  if (!isVis.value) {
+watch(checkedAuth, async () => {
+    changeEntry.value = await checked();
+})
+const routeToAutorized = async () => {
+  isAuth.value = await checked()
+  changeEntry.value =  isAuth.value;
+
+  if (!isVis.value && !authorized.value && isAuth.value === 'Войти') {
     useModalStore().modalVis();
   }
 
-  if (!authorized.value) {
-    console.log("пользователь не авторизован");
-  }
+  else if (authorized.value ) {
+     router.push({name: 'favorites'})
+ }  
 };
+
 </script>
 <template>
   <header class="header">
@@ -26,11 +49,11 @@ const routeToAutorized = () => {
         <router-link to="/" class="header__logo">
           <LogoWhite />
         </router-link>
-        <MenuHeader />
-        <router-link to="#" @click="routeToAutorized" class="header__link">
-          Войти
+        <MenuHeader @user="(msg: string) => changeEntry = msg"/>
+        <router-link  to="#" @click="routeToAutorized" :class="{ 'header__link' : authorized, 'header__link--account' : !authorized }">
+          {{ changeEntry }}
         </router-link>
-        <Modal />
+        <Modal @user="(msg: string) => changeEntry = msg"/>
       </div>
     </div>
   </header>

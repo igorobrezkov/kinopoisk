@@ -10,7 +10,7 @@ import { RouterLink } from "vue-router";
         <router-link to="/" class="header__link"> Главная </router-link>
       </li>
       <li class="header__item">
-        <router-link to="/genres" class="header__link"> Жанры </router-link>
+        <router-link to="/genres" class="header__link" > Жанры </router-link>
       </li>
       <li class="header__item">
         <input

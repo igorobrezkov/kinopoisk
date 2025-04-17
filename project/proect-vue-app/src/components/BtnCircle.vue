@@ -31,6 +31,7 @@ defineProps({
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  color: #ffffff;
 }
 
 .btn__circle > svg {

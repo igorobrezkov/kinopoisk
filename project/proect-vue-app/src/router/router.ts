@@ -1,3 +1,4 @@
+import { toEditorSettings } from 'typescript'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
@@ -23,6 +24,23 @@ const router = createRouter({
    name: 'film',
    path: '/film/:id',
    component: () => import('../views/PageFilmView.vue'),
+  },
+  {
+   name: 'account',
+   path: '/account',
+   component: () => import('../views/AccountView.vue'),
+   children: [
+    {
+     name: 'favorites',
+     path: '/account/favorites',
+     component: () => import('../views/AccountFavoritesView.vue'),
+    },
+    {
+     name: 'settings',
+     path: '/account/settings',
+     component: () => import('../views/AccountSettingsView.vue'),
+    }
+   ]
   }
  ]
 

@@ -1,5 +1,24 @@
 @use '_variables.scss';
 
-@mixin griid-12 {
- grid-template-columns: repeat(12, 1fr);
+@mixin link {
+ color: #fff;
+ font-size: 24px;
+ line-height: 133%;
+ font-weight: 400;
+ position: relative;
+ transition: color .3s linear;
+}
+
+@mixin link-after {
+   content: '';
+    position: absolute;
+    z-index: 5;
+    top: 38px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 2px;
+    background: #DC5DFC;
+    transform: scale(0);
+    transition: transform .3s linear;
 }
