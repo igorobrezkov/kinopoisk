@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { checked } from "../api/checkedAuthorized";
-checked()
 </script>
 
 <template>

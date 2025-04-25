@@ -18,7 +18,7 @@ export const checkedAuth = async (): Promise<boolean | string> => {
  return true
 }
 
-export const checked = async () => {
+export const checked = async (): Promise<boolean | string> => {
  const auth = await checkedAuth();
  if (auth) {
   return auth

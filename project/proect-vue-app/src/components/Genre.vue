@@ -2,7 +2,7 @@
 defineProps({
   nameGenre: String,
   imgSrc: String,
-  detailGenreId: Number,
+  detailGenreId: String,
 });
 </script>
 

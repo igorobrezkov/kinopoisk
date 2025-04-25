@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import Star from "../assets/images/svg-sprite/star_white.svg";
+ defineProps({
+  rating: String
+})
 </script>
 
 <template>
   <div class="rating">
     <div class="rating__wrap">
       <Star class="rating_star" />
-      <span class="rating__desc"> 7,5 </span>
+      <span class="rating__desc"> {{ rating }} </span>
     </div>
   </div>
 </template>
@@ -15,7 +18,6 @@ import Star from "../assets/images/svg-sprite/star_white.svg";
 .rating {
   border-radius: 16px;
   padding: 4px 12px;
-  width: 70px;
   height: 32px;
   background: #308e21;
   display: flex;

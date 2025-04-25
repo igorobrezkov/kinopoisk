@@ -33,7 +33,7 @@ const exitAuth = () => {
         Мой аккаунт
      </h1>
      <MenuAccount />
-     <div>
+     <div class="account__wrapper wrapper">
        <router-view/>
      </div>
      <BtnAccent :text="BtnAccentValue" @click="exitAuth"/>

@@ -3,84 +3,151 @@ import { useRoute } from "vue-router";
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import BtnAccent from "../components/BtnAccent.vue";
 import Back from "../assets/images/svg-sprite/back.svg";
+import { getMovie } from "../api/movie";
+import { usePromise } from 'vue-promised'
+
+
+const genreTitle = ref<string>('');
+const getGenreTitle = (item: string) => {
+   switch (item) {
+          case 'history':           
+            genreTitle.value = 'Историческое';
+            break;
+          case 'horror':
+            genreTitle.value = 'Хоррор';
+            break;
+          case 'scifi':
+            genreTitle.value = 'Фантастика';
+            break;
+          case 'stand-up':
+            genreTitle.value = 'Комедия';
+            break;
+          case 'fantasy':
+            genreTitle.value = 'Фентэзи';
+            break; 
+          case 'drama':
+            genreTitle.value = 'Драма';
+            break; 
+           case 'mystery':
+            genreTitle.value = 'Мистика';
+            break;  
+          case 'family':
+            genreTitle.value = 'Семейное';
+            break; 
+          case 'comedy':
+            genreTitle.value = 'Комедия';
+            break;  
+           case 'romance':
+            genreTitle.value = 'Романтика';
+            break;  
+          case 'music':
+            genreTitle.value = 'Мюзикл';
+            break;   
+          case 'crime':
+            genreTitle.value = 'Детектив';
+            break;  
+          case 'tv-movie':
+            genreTitle.value = 'Телевизионные';
+            break;
+           case 'documentary':
+            genreTitle.value = 'Документальные';
+            break;
+            case 'action':
+            genreTitle.value = 'Динамические';
+            break;
+           case 'thriller':
+            genreTitle.value = 'Триллер';
+            break; 
+          case 'western':
+            genreTitle.value = 'Вестерн';
+            break;  
+          case 'animation':
+            genreTitle.value = 'Анимационные';
+            break;  
+          case 'war':
+            genreTitle.value = 'Военные';
+            break;   
+           case 'adventure':
+            genreTitle.value = 'Приключения';
+            break;                                                      
+        }
+}
+
+let genreArr = ref();
+function setGenreArr(val: any) {
+  genreArr.value = val;
+}
+
 const route = useRoute();
-const arrGanresTitle = [
-  "Драма",
-  "Комедия",
-  "Детектив",
-  "Семейное",
-  "Историческое",
-  "Триллер",
-  "Фантастика",
-  "Приключения",
-];
-const genreArr = [
-  { img: "/src/assets/images/top1.png", rating: 1, id: 1 },
-  { img: "/src/assets/images/top2.png", rating: 2, id: 2 },
-  { img: "/src/assets/images/top3.png", rating: 3, id: 3 },
-  { img: "/src/assets/images/top4.png", rating: 4, id: 4 },
-  { img: "/src/assets/images/top5.png", rating: 5, id: 5 },
-  { img: "/src/assets/images/top6.png", rating: 6, id: 6 },
-  { img: "/src/assets/images/top7.png", rating: 7, id: 7 },
-  { img: "/src/assets/images/top8.png", rating: 8, id: 8 },
-  { img: "/src/assets/images/top9.png", rating: 9, id: 9 },
-  { img: "/src/assets/images/top10.png", rating: 10, id: 11 },
+const ganres = route.path.replace("/genres/", "");
+getGenreTitle(ganres);
 
-  { img: "/src/assets/images/top1.png", rating: 1, id: 12 },
-  { img: "/src/assets/images/top2.png", rating: 2, id: 13 },
-  { img: "/src/assets/images/top3.png", rating: 3, id: 14 },
-  { img: "/src/assets/images/top4.png", rating: 4, id: 15 },
-  { img: "/src/assets/images/top5.png", rating: 5, id: 16 },
-  { img: "/src/assets/images/top6.png", rating: 6, id: 17 },
-  { img: "/src/assets/images/top7.png", rating: 7, id: 18 },
-  { img: "/src/assets/images/top8.png", rating: 8, id: 19 },
-  { img: "/src/assets/images/top9.png", rating: 9, id: 20 },
-  { img: "/src/assets/images/top10.png", rating: 10, id: 21 },
 
-  { img: "/src/assets/images/top1.png", rating: 1, id: 121 },
-  { img: "/src/assets/images/top2.png", rating: 2, id: 131 },
-  { img: "/src/assets/images/top3.png", rating: 3, id: 141 },
-  { img: "/src/assets/images/top4.png", rating: 4, id: 151 },
-  { img: "/src/assets/images/top5.png", rating: 5, id: 161 },
-  { img: "/src/assets/images/top6.png", rating: 6, id: 171 },
-  { img: "/src/assets/images/top7.png", rating: 7, id: 181 },
-  { img: "/src/assets/images/top8.png", rating: 8, id: 191 },
-  { img: "/src/assets/images/top9.png", rating: 9, id: 201 },
-  { img: "/src/assets/images/top10.png", rating: 10, id: 111 },
-
-  { img: "/src/assets/images/top1.png", rating: 1, id: 1212 },
-  { img: "/src/assets/images/top2.png", rating: 2, id: 1312 },
-  { img: "/src/assets/images/top3.png", rating: 3, id: 1412 },
-  { img: "/src/assets/images/top4.png", rating: 4, id: 1512 },
-  { img: "/src/assets/images/top5.png", rating: 5, id: 1612 },
-  { img: "/src/assets/images/top6.png", rating: 6, id: 1712 },
-  { img: "/src/assets/images/top7.png", rating: 7, id: 1812 },
-  { img: "/src/assets/images/top8.png", rating: 8, id: 1912 },
-  { img: "/src/assets/images/top9.png", rating: 9, id: 2012 },
-  { img: "/src/assets/images/top10.png", rating: 10, id: 1112 },
-];
-const ganres = Number(route.path.replace("/genres/", ""));
-
-const ganresTitle = ref(arrGanresTitle[ganres - 1]);
 
 const countFilmsShow = ref<number>(10);
-const arrFilms = computed((): { img: string; rating: number; id: number }[] => {
-  const arrF = [...genreArr];
-  const arFsp = arrF.splice(0, Number(countFilmsShow.value));
 
-  return arFsp.sort((a, b)  => {
+const genreDetail =  getMovie('genre='+ganres);
+
+const arrFilms = computed(() => {
+  let arrF;
+  let arFsp: any;
+  function getArrSort(arFsp: any) {
+    return arFsp.sort((a: any, b: any)  => {
+           if (a.tmdbRating < b.tmdbRating) {
+          return -1;
+         }
+        return 0
+        });
+  }
+  if (genreArr.value) {
+    arrF = [...genreArr.value];
+    arFsp = arrF.splice(0, Number(countFilmsShow.value));
+    getArrSort(arFsp)
+  }
+  else {
+    
+    const promise = genreDetail.then(res => {
+      if (res !== undefined) {
+        arFsp =  res.data.splice(0, Number(countFilmsShow.value));
+      }
+        
+      return getArrSort(arFsp)
+    });
+    return promise
+  }
+  
+
+  return arFsp.sort((a: any, b: any)  => {
     if (a.rating < b.rating) {
       return -1;
     }
     return 0
   });
 });
-const countFilms: number = genreArr.length;
+
+
+
+const promised = usePromise(genreDetail.then(
+  res => {
+    if( res !== undefined)
+    return res.data
+  }
+))
+
+const startPagination = countFilmsShow.value + countFilmsShow.value
+
+
+
+const countFilms: any = () => {
+  return (genreArr.value) ?  genreArr.value.length : startPagination;
+}
+
+
 const moreText: string = "Показать ещё";
 const scrollHeightGenre = ref(0);
 
 const showBtnMore = computed((): boolean => {
-  if (countFilmsShow.value < countFilms) {
+  if (countFilmsShow.value < countFilms()) {
     return true;
   }
   return false;
@@ -124,21 +191,24 @@ function moreFilmsShowMinus() {
   countFilmsShow.value -= 10;
 }
 function moreFilmsShow() {
-  countFilmsShow.value = 10;
+  countFilmsShow.value = 11;
 }
 </script>
 
 <template>
+ 
   <section class="genre">
     <div class="container">
       <router-link class="genre__link" to="/genres">
         <Back class="genre__back" />
-        <h1 class="genre__title">{{ ganresTitle }}</h1>
+        <h1 class="genre__title">{{ genreTitle }}</h1>
       </router-link>
-
+      {{ setGenreArr(promised.data.value) }}
       <ul class="genre__list">
-        <li class="genre__item" v-for="film in arrFilms" :key="film.id">
-          <img :src="film.img" />
+        <li class="genre__item"   v-for="film in arrFilms" :key="film.id">
+          <router-link class="genre__link-item" :to="{ name: 'film', params: { id: film.id }}" >
+            <img :src="film.posterUrl" />
+          </router-link>
         </li>
       </ul>
       <div class="genre__btnMore">
@@ -150,4 +220,5 @@ function moreFilmsShow() {
       </div>
     </div>
   </section>
+  
 </template>

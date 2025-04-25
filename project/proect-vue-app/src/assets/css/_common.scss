@@ -167,6 +167,7 @@ a {
 .film {
   &__wrap {
     display: flex;
+    justify-content: space-between;
   }
 
   &__content {
@@ -189,6 +190,7 @@ a {
   &__desc {
     margin: 0;
     font-weight: 400;
+    max-width: 550px;
     font-size: 24px;
     line-height: 133%;
     color: rgba(255, 255, 255, 0.7);
@@ -196,6 +198,7 @@ a {
 
   &__preview-img {
     border-radius: 18px;
+    max-width: 680px;
   }
 
   &__navigation {
@@ -204,6 +207,7 @@ a {
     padding-top: 38px;
     list-style: none;
     display: flex;
+    align-items: center;
     gap: 0 16px;
   }
 }
@@ -364,6 +368,8 @@ a {
   &__item {
     border-radius: 16px;
     overflow: hidden;
+    max-width: 224px;
+    max-height: 336px;
   }
 
   &__back {
@@ -534,6 +540,7 @@ a {
     display: inline-block;
     margin-bottom: 24px;
   }
+
 }
 
 /* ACCOUNT */
@@ -549,6 +556,7 @@ a {
 
   &__list {
     margin: 0;
+    margin-bottom: 70px;
     padding: 0;
     list-style: none;
     display: flex;
@@ -579,6 +587,44 @@ a {
     &>svg {
       align-self: center;
       margin-right: 8px;
+    }
+  }
+
+  &-settings {
+    margin: 0;
+    margin-bottom: 63px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 40px 0;
+    flex-direction: column;
+
+    &__item {
+      display: flex;
+      gap: 0 16px;
+    }
+
+    .item {
+      &__wrap {
+        margin: 0;
+        display: flex;
+        gap: 5px 0;
+        flex-direction: column;
+      }
+    }
+
+    &__fio-title {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 133%;
+      color: #fff;
+    }
+
+    &__fio-desc {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 133%;
+      color: #fff
     }
   }
 }

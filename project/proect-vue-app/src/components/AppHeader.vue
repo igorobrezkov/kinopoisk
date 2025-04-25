@@ -9,10 +9,11 @@ import { useModalStore } from "../stores/modal";
 import { ref, watch } from "vue";
 import {checked } from "../api/checkedAuthorized"
 import router from "../router/router";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const { authorized, authData } = storeToRefs(useAuthorizedStore());
 const { isVis } = storeToRefs(useModalStore());
 const changeEntry = ref<string | boolean>("Войти"); 
-changeEntry
 const isAuth = ref<boolean | string>('');
 const checkedAuth = async () => {
   if (authData.value) {
@@ -21,11 +22,10 @@ const checkedAuth = async () => {
   else {
     changeEntry.value = await checked();
   }
-  
 }
 checkedAuth();
 
-watch(checkedAuth, async () => {
+watch(route, async () => {
     changeEntry.value = await checked();
 })
 const routeToAutorized = async () => {

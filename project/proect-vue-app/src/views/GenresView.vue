@@ -117,7 +117,7 @@ const loadGenres =  () => {
             break;                                                      
         }
         if (name !== null && src !== null) {
-          arrGenres.value.push({img: src, title: name, id: index++})
+          arrGenres.value.push({img: src, title: name, id: index++, detail: item})
         } 
     })    
      
@@ -136,7 +136,7 @@ loadGenres();
           <Genre
             :nameGenre="genre.title"
             :imgSrc="genre.img"
-            :detailGenreId="genre.id"
+            :detailGenreId="genre.detail"
           />
         </li>
       </ul>
