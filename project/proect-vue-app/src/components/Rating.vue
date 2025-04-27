@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Star from "../assets/images/svg-sprite/star_white.svg";
  defineProps({
-  rating: String
+   rating: String,
 })
 </script>
 
 <template>
-  <div class="rating">
+  <div class="rating" >
     <div class="rating__wrap">
       <Star class="rating_star" />
       <span class="rating__desc"> {{ rating }} </span>

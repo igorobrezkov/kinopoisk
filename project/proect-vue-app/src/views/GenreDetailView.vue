@@ -6,7 +6,6 @@ import Back from "../assets/images/svg-sprite/back.svg";
 import { getMovie } from "../api/movie";
 import { usePromise } from 'vue-promised'
 
-
 const genreTitle = ref<string>('');
 const getGenreTitle = (item: string) => {
    switch (item) {
@@ -20,7 +19,7 @@ const getGenreTitle = (item: string) => {
             genreTitle.value = 'Фантастика';
             break;
           case 'stand-up':
-            genreTitle.value = 'Комедия';
+            genreTitle.value = 'Cтендап';
             break;
           case 'fantasy':
             genreTitle.value = 'Фентэзи';
@@ -82,8 +81,6 @@ const route = useRoute();
 const ganres = route.path.replace("/genres/", "");
 getGenreTitle(ganres);
 
-
-
 const countFilmsShow = ref<number>(10);
 
 const genreDetail =  getMovie('genre='+ganres);
@@ -116,7 +113,6 @@ const arrFilms = computed(() => {
     return promise
   }
   
-
   return arFsp.sort((a: any, b: any)  => {
     if (a.rating < b.rating) {
       return -1;

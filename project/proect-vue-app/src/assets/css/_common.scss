@@ -168,6 +168,7 @@ a {
   &__wrap {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   &__content {
@@ -215,12 +216,16 @@ a {
 .film-detail {
   &__title {
     margin: 0;
-    margin-bottom: 62px;
     padding-top: 37px;
     font-weight: 700;
     font-size: 40px;
     line-height: 120%;
     color: #fff;
+
+    &--desc {
+      font-size: 1.7em;
+      padding-top: 25px;
+    }
   }
 
   &__wrap {
@@ -232,6 +237,7 @@ a {
     list-style: none;
     margin: 0;
     padding: 0;
+    padding-top: 62px;
     display: flex;
     flex-direction: column;
     gap: 24px 0;
@@ -296,6 +302,32 @@ a {
     position: relative;
     max-width: 224px;
     max-height: 336px;
+    display: flex;
+    min-width: 224px;
+
+    &--no-image {
+      background-color: gray;
+      border-radius: 16px;
+      position: relative;
+
+      .top10-desc {
+        position: absolute;
+        height: 100px;
+        width: 100%;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        color: white;
+        font-size: 700;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
   }
 
   &__img {
@@ -465,6 +497,29 @@ a {
     background-size: 24px;
     background-repeat: no-repeat;
     background-position: left 16px center;
+    transition: border .3s opacity .3s;
+
+    &:hover {
+      border: 1px solid #9747FF;
+      opacity: 0.5;
+    }
+
+    &--error:hover {
+      border: 1px solid #ff7575;
+      ;
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      border: 1px solid #9747FF;
+      opacity: 1;
+    }
+
+    &--error:focus-visible {
+      border: 1px solid #ff7575;
+      ;
+      opacity: 1;
+    }
   }
 
   &__input--error {
@@ -477,6 +532,10 @@ a {
 
   &__input--email {
     background-image: url('/src/assets/images/svg-sprite/form_email.svg');
+
+    &:hover {
+      background-image: url('/src/assets/images/svg-sprite/form_email_hover.svg');
+    }
   }
 
   &__email--error {
@@ -485,6 +544,10 @@ a {
 
   &__input--pass {
     background-image: url('/src/assets/images/svg-sprite/form_pass.svg');
+
+    &:hover {
+      background-image: url('/src/assets/images/svg-sprite/form_pass_hover.svg');
+    }
   }
 
   &__pass--error {
@@ -493,6 +556,10 @@ a {
 
   &__input--user {
     background-image: url('/src/assets/images/svg-sprite/form_user.svg');
+
+    &:hover {
+      background-image: url('/src/assets/images/svg-sprite/form_user_hover.svg');
+    }
   }
 
   &__user--error {

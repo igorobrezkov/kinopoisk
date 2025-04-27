@@ -17,7 +17,7 @@ const changeEntry = ref<string | boolean>("Войти");
 const isAuth = ref<boolean | string>('');
 const checkedAuth = async () => {
   if (authData.value) {
-    changeEntry.value = authData.value.name;
+    changeEntry.value = authData.value.surname;
   }
   else {
     changeEntry.value = await checked();

@@ -6,7 +6,7 @@ import type { IGenres } from '../types/genres';
 import HistoryImg from '../assets/images/genre5.png';
 import HorrorImg from '../assets/images/genre_horror.png';
 import ScifiImg from '../assets/images/genre7.png';
-import StandUpImg from '../assets/images/genre2.png';
+import StandUpImg from '../assets/images/genre_stend-up.png';
 import FantasyImg from '../assets/images/genre_fantasy.png';
 import DramaImg from '../assets/images/genre1.png';
 import MysteryImg from '../assets/images/genre_mystery.png';
@@ -18,7 +18,7 @@ import CrimeImg from '../assets/images/genre3.png';
 import TvMovieImg from '../assets/images/genre_tv-movie.png';
 import DocumentaryImg from '../assets/images/genre_documentary.png';
 import ActionImg from '../assets/images/genre_action.png';
-import ThrillerImg from '../assets/images/genre5.png';
+import ThrillerImg from '../assets/images/genre6.png';
 import WesternImg from '../assets/images/genre_western.png';
 import AnimationImg from '../assets/images/genre_animation.png';
 import WarImg from '../assets/images/genre_war.png'; 
@@ -48,7 +48,7 @@ const loadGenres =  () => {
             src = ScifiImg;
             break;
           case 'stand-up':
-            name = 'Комедия';
+            name = 'Стендап';
             src = StandUpImg;
             break;
           case 'fantasy':

@@ -1,5 +1,6 @@
 export interface IGenres {
  img: string,
  title: string,
- id: number
+ id: number,
+ detail: string
 }

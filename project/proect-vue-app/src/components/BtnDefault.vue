@@ -29,6 +29,10 @@ const routeToPush = () => {
   font-size: 18px;
   line-height: 133%;
   color: #fff;
+  transition: background-color .3s;
+  &:hover {
+    background-color: #45526e;
+  }
 }
 .btn__default:hover {
   cursor: pointer;

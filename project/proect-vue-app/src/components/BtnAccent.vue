@@ -18,6 +18,11 @@ defineProps({
   font-size: 18px;
   line-height: 133%;
   color: #fff;
+  transition: background-color .3s;
+
+  &:hover {
+    background-color: #45526E;
+  }
 }
 .btn__accent:hover {
   cursor: pointer;

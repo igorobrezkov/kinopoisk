@@ -1,28 +1,38 @@
 <script setup lang="ts">
 import TopRating from "../components/TopRating.vue";
-const films = [
-  { img: "/src/assets/images/top1.png", rating: 1, id: 1 },
-  { img: "/src/assets/images/top2.png", rating: 2, id: 2 },
-  { img: "/src/assets/images/top3.png", rating: 3, id: 3 },
-  { img: "/src/assets/images/top4.png", rating: 4, id: 4 },
-  { img: "/src/assets/images/top5.png", rating: 5, id: 5 },
-  { img: "/src/assets/images/top6.png", rating: 6, id: 6 },
-  { img: "/src/assets/images/top7.png", rating: 7, id: 7 },
-  { img: "/src/assets/images/top8.png", rating: 8, id: 8 },
-  { img: "/src/assets/images/top9.png", rating: 9, id: 9 },
-  { img: "/src/assets/images/top10.png", rating: 10, id: 10 },
-];
+import { usePromise } from 'vue-promised';
+import { getTop10 } from "../api/top10";
+import { ref } from 'vue'
+const arrFilms = ref();
+const setArrFilms = (val: any) => {
+  arrFilms.value = val;
+}
+
+const top10 = getTop10();
+const promised = usePromise(top10);
+
 </script>
 <template>
   <section class="top-10">
+    {{ setArrFilms(promised.data.value) }}
     <div class="container">
       <h2 class="top-10__title">Топ 10 фильмов</h2>
       <ul class="top-10__list">
-        <li class="top-10__item" v-for="film in films" :key="film.id">
-          <img class="top-10__img" :src="film.img" alt="" />
-          <TopRating :rating="film.rating" />
+        <li class="top-10__item" :class="{'top-10__item--no-image': !film.backdropUrl && !film.posterUrl}" v-if="promised.data.value" v-for="(film, index) in arrFilms.data" :key="film?.id">
+          <router-link :to="{ name: 'film', params: { id: film.id }}" class="top-10__link">
+            <img class="top-10__img" v-if="film.posterUrl" :src="film.posterUrl" alt="" />
+            <img class="top-10__img" v-else-if="film.backdropUrl" :src="film.backdropUrl" alt="" />
+            <span v-else class="top10-desc"> {{ film.title }}</span>
+            <TopRating :rating="index + 1" />
+          </router-link>
         </li>
       </ul>
     </div>
   </section>
 </template>
+
+<style scoped>
+ .top-10__link {
+  display: flex;
+ }
+</style>

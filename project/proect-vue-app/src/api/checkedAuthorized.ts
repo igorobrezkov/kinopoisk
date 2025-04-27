@@ -13,7 +13,7 @@ export const checkedAuth = async (): Promise<boolean | string> => {
  else if (result) {
   authorized.userAuthorized();
   authorized.userAuthData(result.data);
-  return result.data.name;
+  return result.data.surname;
  }
  return true
 }

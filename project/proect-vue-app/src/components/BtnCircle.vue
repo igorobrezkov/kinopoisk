@@ -32,6 +32,10 @@ defineProps({
   justify-content: center;
   cursor: pointer;
   color: #ffffff;
+  transition: background-color .3s;
+  &:hover {
+    background-color: #45526e;
+  }
 }
 
 .btn__circle > svg {

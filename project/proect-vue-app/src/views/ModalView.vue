@@ -150,7 +150,6 @@ const formSend = () => {
      if (isRegistration.value === false) {
        getAuth(inputEmail.value, inputPass.value).then(result => {
          let values = Object.values(result)
-            console.log(result)
             for (let value of values) {
               if (value === true) {
                 
@@ -158,7 +157,7 @@ const formSend = () => {
                 modalVis();
                 getProfile().then(result => {
                   if (result?.data) {
-                      emit('user', result.data.name)
+                      emit('user', result.data.surname)
                       userAuthData(result.data)
                   }          
                 })

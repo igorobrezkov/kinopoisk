@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import Rating from "./Rating.vue";
 import BtnAccent from "./BtnAccent.vue";
 import BtnDefault from "./BtnDefault.vue";
@@ -7,6 +7,9 @@ import BtnCircle from "./BtnCircle.vue";
 import { getMovieId } from "../api/movieId"
 import { usePromise } from 'vue-promised';
 import { getRandomFilm } from "../api/random";
+import { storeToRefs } from "pinia";
+import { useAuthorizedStore } from "../stores/autorized";
+const { authorized } = storeToRefs(useAuthorizedStore());
 const valueBtnAccent = ref("Трейлер");
 const valueBtnDefault = ref("О фильме");
 const favorite = "favorite";
@@ -17,13 +20,106 @@ const props = defineProps({
   idFilm:  Promise<Number> ,
 });
 
-let promised = ref();
+const emit = defineEmits(['film-data']);
+
+
+const promised = ref();
+const genreTitle = ref<string[]>([])
+
+const genre = (item: string) => {
+   switch (item) {
+     case 'history': 
+          if (!genreTitle.value.includes(item))          
+            genreTitle.value.push('историческое');
+            break;
+     case 'horror':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('хоррор');
+            break;
+     case 'scifi':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('фантастика');
+            break;
+     case 'stand-up':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('комедия');
+            break;
+     case 'fantasy':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('фентэзи');
+            break; 
+     case 'drama':
+            if (!genreTitle.value.includes(item))  
+           genreTitle.value.push('драма');
+            break; 
+     case 'mystery':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('мистика');
+            break;  
+     case 'family':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('семейное');
+            break; 
+     case 'comedy':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('комедия');
+            break;  
+     case 'romance':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('романтика');
+            break;  
+     case 'music':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('мюзикл');
+            break;   
+     case 'crime':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('детектив');
+            break;  
+     case 'tv-movie':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('телевизионные');
+            break;
+     case 'documentary':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('документальные');
+            break;
+     case 'action':
+              if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('динамические');
+            break;
+     case 'thriller':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('триллер');
+            break; 
+     case 'western':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('вестерн');
+            break;  
+     case 'animation':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('анимационные');
+            break;  
+     case 'war':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('военные');
+            break;   
+     case 'adventure':
+            if (!genreTitle.value.includes(item))  
+            genreTitle.value.push('приключения');
+            break;                                                      
+        }
+}
+
+const getGenreTitle = () => {
+  return genreTitle.value.join(', ');
+}
+
 const film = async (id: Promise<Number>) => {
   async function oF(strId: string) {
       const res = await getMovieId(strId);
-    let obj: { id: number | undefined; title: string | undefined; posterUrl: string | undefined; plot: string | undefined; tmdbRating: string | undefined; releaseYear: string | undefined; runtime: string | undefined;} =
-      { id: undefined, title: undefined, posterUrl: undefined, plot: undefined, tmdbRating: undefined, releaseYear: undefined, runtime: undefined };
-    //console.log(res);
+    let obj: { id: number | undefined; title: string | undefined; posterUrl: string | undefined; plot: string | undefined; tmdbRating: string | undefined; releaseYear: string | undefined; runtime: string | undefined; genres: [] | undefined} =
+      { id: undefined, title: undefined, posterUrl: undefined, plot: undefined, tmdbRating: undefined, releaseYear: undefined, runtime: undefined, genres: undefined };
     let entries = Object.entries(res?.data);
     for (let [key, val] of entries) {
       switch (key) {
@@ -37,14 +133,59 @@ const film = async (id: Promise<Number>) => {
           obj = Object.assign(obj, { posterUrl: val });
           break;
         case 'plot':
-          obj = Object.assign(obj, { plot: val });
+          function clampString(inputString: string, maxLength: number) {
+            let regexp = new RegExp(`((.{${maxLength - 3}})...)(.+)`, "s");
+            return inputString.replace(regexp, (m, g1, g2, g3) => g3 ? g2 + "..." : g1);
+          }
+          if (typeof val == 'string') {
+            const minVal = clampString(val, 65)
+             obj = Object.assign(obj, { descPlot: minVal }); 
+          }
+          
+          obj = Object.assign(obj, { plot: val }); 
+          break;
+        case 'homepage':
+          obj = Object.assign(obj, { homepage: val }); 
+          break;  
+         case 'director':
+          obj = Object.assign(obj, { director: val });
+          break;
+          case 'language':
+          obj = Object.assign(obj, { language: val }); 
+          break;
+           case 'budget':
+          obj = Object.assign(obj, { budget: val }); 
+          break;  
+           case 'production':
+          obj = Object.assign(obj, { production: val }); 
+          break; 
+           case 'revenue':
+          obj = Object.assign(obj, { revenue: val }); 
+          break;  
+          case 'awardsSummary':
+          obj = Object.assign(obj, { awardsSummary: val }); 
+          break; 
+        case 'genres':
+          type arr = string[] | any;
+          let arrVal: arr = val
+          for (let item of arrVal) {
+            genre(item);
+          }       
           break;
         case 'releaseYear':
           obj = Object.assign(obj, { releaseYear: val });
           break;  
         case 'tmdbRating':
+          const getStyle = (rating: number): string => {
+            
+            if (rating >= 8) return 'yelow';
+            else if (rating < 8 && rating >= 7) return 'green';
+            else if (rating < 7 && rating > 5) return 'gray';
+            else if (rating < 5) return 'red';  
+            else return 'more'                         
+          }
           if (typeof val == 'number')
-          obj = Object.assign(obj, { tmdbRating: val.toString() });
+          obj = Object.assign(obj, { tmdbRating: val.toString(), style: getStyle(val) });
           break;
         case 'runtime':
           const toHoursAndMinutes = (TotalMinutes: number) => {
@@ -68,48 +209,49 @@ const film = async (id: Promise<Number>) => {
       return await oF(strId_1);
 }
 
-
 const goRandomFilm = (idF: Promise<Number> | undefined) => {
    if (idF !== undefined ) {
      return usePromise(film(idF))
      }
 }
 const goNewFilm = async () => {
+  genreTitle.value = [];
   const randomFilm = getRandomFilm();
 
 const getId = async() => {
   return randomFilm.then(res => {
-  console.log(res)
   return res?.data.id;
 })
 }
   promised.value = goRandomFilm(await getId());
- 
-  console.log(promised)
+  emit('film-data', promised);
 }
 
- promised.value = goRandomFilm(props.idFilm)
+promised.value = goRandomFilm(props.idFilm);
+emit('film-data', promised.value);
+
 
 const showBtnDefault = ref(false);
 if (props.showBtn) {
   showBtnDefault.value = props.showBtn;
 }
 </script>
+
 <template>
   <div class="film" >
     <div class="film__wrap">
       <div class="film__content" >
         <ul class="rating" >
           <li class="rating__item">
-            <Rating v-if="promised" :rating="promised.data?.tmdbRating"/>
+            <Rating v-if="promised" :rating="promised.data?.tmdbRating" :class="promised.data?.style "/>
           </li>
           <li class="rating__item">{{ promised.data?.releaseYear }}</li> 
-          <li class="rating__item">детектив</li>
+          <li class="rating__item"> {{ getGenreTitle() }}</li>
           <li class="rating__item">{{ promised.data?.runtime }}</li> 
         </ul>
         <h1 class="film__title" v-if="promised"> {{ promised.data?.title }} </h1>
         <p class="film__desc" v-if="promised">
-          {{ promised.data?.plot }}
+          {{ promised.data?.descPlot }}
         </p>
         <ul class="film__navigation">
           <li class="film__item">
@@ -118,11 +260,11 @@ if (props.showBtn) {
           <li class="film__item">
             <BtnDefault
               :text="valueBtnDefault"
-              :filmId="1"
+              :filmId="promised.data?.id"
               v-if="showBtnDefault"
             />
           </li>
-          <li class="film__item">
+          <li v-if="authorized" class="film__item">
             <BtnCircle :componentName="favorite" />
           </li>
           <li class="film__item s">
@@ -140,3 +282,18 @@ if (props.showBtn) {
     </div>
   </div>
 </template>
+
+<style scoped>
+  .yelow {
+    background-color: #A59400;
+  }
+  .green {
+    background-color: #308e21;
+  }
+  .gray {
+    background-color: #777777;
+  }
+  .red {
+    background-color: #C82020;
+  }
+</style>
