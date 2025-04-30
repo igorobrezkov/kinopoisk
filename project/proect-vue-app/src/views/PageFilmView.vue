@@ -24,8 +24,6 @@ const changeFilm = (val: any) => {
 }
 </script>
 
-
-
 <template>
   <section class="film-detail">
     <div class="container">

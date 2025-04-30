@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { useModalStore } from "../stores/modal"; 
 import { useRegistrationStore } from "../stores/registration";
 import { useAuthorizedStore } from "../stores/autorized";
+import { useFavoritesStore } from "../stores/favorites";
 import { storeToRefs } from "pinia";
 import CloseModal from "../assets/images/svg-sprite/close_modal.svg";
 import BtnAccent from "../components/BtnAccent.vue";
@@ -18,6 +19,7 @@ const { modalClose } = useModalStore();
 const { userRegistration } = useRegistrationStore();
 const { userAuth } = useRegistrationStore();  
 const { userAuthorized, userAuthData } = useAuthorizedStore();
+const { addFaforites } = useFavoritesStore();
 
 const emit = defineEmits(['user'])
 
@@ -158,7 +160,8 @@ const formSend = () => {
                 getProfile().then(result => {
                   if (result?.data) {
                       emit('user', result.data.surname)
-                      userAuthData(result.data)
+                    userAuthData(result.data);
+                    addFaforites();
                   }          
                 })
               }

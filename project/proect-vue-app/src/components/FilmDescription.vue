@@ -1,7 +1,8 @@
 <script setup lang="ts" >
 
 import { ref } from 'vue'
-import LocaleCurrency from  'locale-currency';
+import LocaleCurrency from 'locale-currency';
+
 const curency = ref<string | null>('USD');
 
 const setCurrency = (val: string ) => {
@@ -31,7 +32,6 @@ const getgetCurrencyFormat = (): string | undefined => {
   dataFilmDesc: Object  ,
 });
 
-
 const languageNames =  new Intl.DisplayNames(['ru'], {
   type: 'language'
 });
@@ -47,12 +47,11 @@ function moneyFormat(n: string) {
 function getMoney(v: string) {
   return moneyFormat(v).replace(',00', '')
 }
-
  </script>
 
 <template >
   <h2 class="film-detail__title" >О фильме</h2>
-  <div class="film-detail__wrap">
+  <div class="film-detail__wrap" v-if="dataFilmDesc">
     <ul class="film-detail__list" >
       <li class="film-detail__item" v-if="dataFilmDesc && dataFilmDesc.data?.language">
          {{ setCurrency(dataFilmDesc.data?.language) }}
@@ -97,7 +96,7 @@ function getMoney(v: string) {
           {{ dataFilmDesc.data?.plot }}
         </p>
     </div>
-  </div>
+  </div>  
 </template> 
 
 

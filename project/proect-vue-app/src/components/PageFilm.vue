@@ -5,16 +5,41 @@ import BtnAccent from "./BtnAccent.vue";
 import BtnDefault from "./BtnDefault.vue";
 import BtnCircle from "./BtnCircle.vue";
 import { getMovieId } from "../api/movieId"
+import { addFavorites } from "../api/favorites/addFavorites";
+import { delFavorites } from "../api/favorites/delFavorites";
 import { usePromise } from 'vue-promised';
 import { getRandomFilm } from "../api/random";
 import { storeToRefs } from "pinia";
 import { useAuthorizedStore } from "../stores/autorized";
+import { useFavoritesStore } from "../stores/favorites";
+import { usePlayer } from '@vue-youtube/core';
+import ModalTrailer from "./ModalTrailer.vue";
+import { useModalStore } from "../stores/modal";
+const { isVisTrailer } = storeToRefs(useModalStore());
+
+const goVideoTrailer = () => {
+  if (!isVisTrailer.value) {
+    useModalStore().modalVisTrailer();
+ }
+}
+
+const player = ref();
+const trailerId = ref('dQw4w9WgXcQ');
+
 const { authorized } = storeToRefs(useAuthorizedStore());
+const { isFavorites, addFaforites } = useFavoritesStore();
 const valueBtnAccent = ref("Трейлер");
 const valueBtnDefault = ref("О фильме");
-const favorite = "favorite";
+const favorite = ref("favorite");
 const cinemaGuide = "cinema-guide";
+const { onReady } = usePlayer(trailerId.value, player);
+onReady((event) => {
+  // Start playing the video when the player is ready*
+  event.target.playVideo();
+})
 
+
+addFaforites();
 const props = defineProps({
   showBtn: Boolean,
   idFilm:  Promise<Number> ,
@@ -110,7 +135,6 @@ const genre = (item: string) => {
             break;                                                      
         }
 }
-
 const getGenreTitle = () => {
   return genreTitle.value.join(', ');
 }
@@ -120,12 +144,20 @@ const film = async (id: Promise<Number>) => {
       const res = await getMovieId(strId);
     let obj: { id: number | undefined; title: string | undefined; posterUrl: string | undefined; plot: string | undefined; tmdbRating: string | undefined; releaseYear: string | undefined; runtime: string | undefined; genres: [] | undefined} =
       { id: undefined, title: undefined, posterUrl: undefined, plot: undefined, tmdbRating: undefined, releaseYear: undefined, runtime: undefined, genres: undefined };
+   
+    trailerId.value = res?.data.trailerYouTubeId 
     let entries = Object.entries(res?.data);
     for (let [key, val] of entries) {
       switch (key) {
         case 'id':
           obj = Object.assign(obj, { id: val });
           break;
+        case 'trailerUrl':
+          obj = Object.assign(obj, { trailer: val }); 
+          break;  
+         case 'trailerYouTubeId':
+          obj = Object.assign(obj, { trailerYouTubeId: val }); 
+          break;   
         case 'title':
           obj = Object.assign(obj, { title: val });
           break;
@@ -235,10 +267,35 @@ const showBtnDefault = ref(false);
 if (props.showBtn) {
   showBtnDefault.value = props.showBtn;
 }
+
+
+const filmFavorites = async (val: string) => {    
+  if (favorite.value === 'favorite') {
+    await addFavorites(val.toString());
+  }
+
+  else if (favorite.value === 'favorite-add') {
+    await delFavorites(val.toString());
+  }
+  addFaforites();
+}
+
+const  checkedFavoeite =  (val: string) => {
+  if (isFavorites(val)) {
+    favorite.value = 'favorite-add';
+    return isFavorites(val); 
+  }
+  else {
+    favorite.value = 'favorite';
+    return isFavorites(val);
+  } 
+}
+
 </script>
 
 <template>
   <div class="film" >
+     {{ checkedFavoeite(promised.data?.id) }}  
     <div class="film__wrap">
       <div class="film__content" >
         <ul class="rating" >
@@ -255,7 +312,8 @@ if (props.showBtn) {
         </p>
         <ul class="film__navigation">
           <li class="film__item">
-            <BtnAccent :text="valueBtnAccent" />
+            <BtnAccent :text="valueBtnAccent"  @click="goVideoTrailer"/>
+            <ModalTrailer v-if="promised.data?.trailerYouTubeId" :idVideo="promised.data?.trailerYouTubeId" :tittleVideo="promised.data?.title"/>
           </li>
           <li class="film__item">
             <BtnDefault
@@ -265,7 +323,7 @@ if (props.showBtn) {
             />
           </li>
           <li v-if="authorized" class="film__item">
-            <BtnCircle :componentName="favorite" />
+            <BtnCircle :componentName="favorite" @click=" filmFavorites(promised.data.id)"/>
           </li>
           <li class="film__item s">
             <BtnCircle :componentName="cinemaGuide" v-if="showBtnDefault" @click="goNewFilm"/>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Favorite from "../assets/images/svg-sprite/favorite.svg";
+import FavoriteAdd from "../assets/images/svg-sprite/favorite_add.svg";
 import CinemaGuide from "../assets/images/svg-sprite/cinema_guide.svg";
 defineProps({
   componentName: String,
@@ -9,14 +10,16 @@ defineProps({
 
 <template>
   <span class="btn__circle" v-if="componentName == 'favorite'" type="button"
-    ><Favorite
-  /></span>
+    ><Favorite />
+ </span>
+ <span class="btn__circle" v-else-if="componentName == 'favorite-add'" type="button"
+    ><FavoriteAdd />
+ </span>
   <span
     class="btn__circle"
     v-else-if="componentName == 'cinema-guide'"
     type="button"
-    ><CinemaGuide
-  /></span>
+    ><CinemaGuide/></span>
 </template>
 
 <style scoped>
