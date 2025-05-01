@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useModalStore } from "../stores/modal"; 
 import { storeToRefs } from "pinia";
-import { ref, defineAsyncComponent } from "vue"
+import { ref, defineAsyncComponent, watch } from "vue"
 import CloseModal from "../assets/images/svg-sprite/close_modal.svg";
 import ButtonTrailerPause from "../assets/images/svg-sprite/trailer_pause.svg";
 import ButtonTrailerPlay from "../assets/images/svg-sprite/trailer_play.svg"
@@ -12,23 +12,43 @@ import ErrorTrailer from "./ErrorTrailer.vue";
 const TrailerYoutube = defineAsyncComponent({
  loader: () => import('./YoutubeTrailer.vue'),
  loadingComponent: LoadingTrailer,
- // Задержка перед отображением компонента загрузки. По умолчанию: 200 мс.
- delay: 200,
-
- // компонент, используемый при ошибке загрузки
+  delay: 200,
  errorComponent: ErrorTrailer,
- // Компонент ошибки будет отображаться, если указано и было превышено время ожидания. По умолчанию: Infinity.
  timeout: 3000
 }
 )
 
+const youtubeIsLoadding = ref(false)
 const eventTarget = ref();
 const visTitle = ref(false);
 const showBtnPause = ref(false);
 const showBtnPlay = ref(false);
 const goTrailer = ref();
+const visTextBlockedYoutebe = ref(false);
 const { isVisTrailer } = storeToRefs(useModalStore());
 const { modalCloseTrailer } = useModalStore();
+
+
+const youtubeLoadding = () => {
+
+ setTimeout(() => {
+  if (eventTarget.value == undefined) {
+   youtubeIsLoadding.value = true;
+     setTimeout(() => {
+      if (eventTarget.value == undefined) {
+        youtubeIsLoadding.value = false;
+        visTextBlockedYoutebe.value = true;
+    }
+   }, 5000) 
+  }
+  else {
+   youtubeIsLoadding.value = false;
+  }
+  }, 1000)
+}
+watch(eventTarget, () => {
+  youtubeLoadding();
+}, { immediate: true })
 
 defineProps({
  idVideo: String,
@@ -76,9 +96,10 @@ const pausePlayVidio = () => {
            @vis-title="title => visTitle = title"
            />                    
            <h2 class="modal-trailer__title" v-show="visTitle"> {{ tittleVideo }}</h2>
+           <h2 class="modal-trailer__title-error" v-show="visTextBlockedYoutebe">Похоже, что в вашем регионе ютюб заблокирован</h2>
             <span v-show="showBtnPause, !goTrailer" @click="pausePlayVidio"  class="modal-trailer__pause"><ButtonTrailerPause /></span>
             <span v-show="showBtnPlay" @click="goPlayVidio" class="modal-trailer__play"><ButtonTrailerPlay /></span>        
-           
+            <LoadingTrailer v-show="youtubeIsLoadding"/>
       </div>
       <CloseModal @click="modalCloseTrailer" class="modal__close--trailer" />
       
@@ -126,5 +147,11 @@ const pausePlayVidio = () => {
    height: 80px;
    background: #fff;
    cursor: pointer;
+  }
+  .modal-trailer__title-error {
+   font-weight: 700;
+   font-size: 24px;
+   line-height: 133%;
+   color: #fff;
   }
 </style>

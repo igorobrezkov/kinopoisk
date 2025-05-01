@@ -10,7 +10,7 @@ const { isVisTrailer } = storeToRefs(useModalStore());
 
 const props = defineProps({
  idVideoY: String,
- tittleVideoY: String
+ tittleVideoY: String,
 })
 
 const emits = defineEmits(['event', 'btn-play', 'btn-pause', 'go-trailer', 'vis-title']);
