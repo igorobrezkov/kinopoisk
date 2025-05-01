@@ -1,13 +1,27 @@
 <script setup lang="ts">
 import { useModalStore } from "../stores/modal"; 
 import { storeToRefs } from "pinia";
-import { ref, watch} from "vue"
+import { ref, defineAsyncComponent } from "vue"
 import CloseModal from "../assets/images/svg-sprite/close_modal.svg";
-import { usePlayer, PlayerState } from '@vue-youtube/core';
 import ButtonTrailerPause from "../assets/images/svg-sprite/trailer_pause.svg";
 import ButtonTrailerPlay from "../assets/images/svg-sprite/trailer_play.svg"
-const player = ref(undefined);
-const idVideo = ref();
+import LoadingTrailer from "./LoadingTrailer.vue";
+import ErrorTrailer from "./ErrorTrailer.vue";
+
+
+const TrailerYoutube = defineAsyncComponent({
+ loader: () => import('./YoutubeTrailer.vue'),
+ loadingComponent: LoadingTrailer,
+ // Задержка перед отображением компонента загрузки. По умолчанию: 200 мс.
+ delay: 200,
+
+ // компонент, используемый при ошибке загрузки
+ errorComponent: ErrorTrailer,
+ // Компонент ошибки будет отображаться, если указано и было превышено время ожидания. По умолчанию: Infinity.
+ timeout: 3000
+}
+)
+
 const eventTarget = ref();
 const visTitle = ref(false);
 const showBtnPause = ref(false);
@@ -16,57 +30,9 @@ const goTrailer = ref();
 const { isVisTrailer } = storeToRefs(useModalStore());
 const { modalCloseTrailer } = useModalStore();
 
-const props = defineProps({
+defineProps({
  idVideo: String,
  tittleVideo: String
-})
-
-idVideo.value =  props.idVideo;
-    const { onReady, onStateChange  } = usePlayer(idVideo.value, player, {
-    playerVars: {
-     iv_load_policy: 3,
-     controls: 0,
-      autoplay: 0, 
-      mute: 1, 
-      showinfo: 0,
-      playsinline: 0,
-      modestbranding: 0,
-      rel: 0,
-     },
-    cookie: false,
-     width: 960,    
-     height: 540,    
-    });
-
-onStateChange((event) => {
-    if (event.data == PlayerState.PLAYING) {
-     console.log('onStateChange') 
-     visTitle.value = false;
-     showBtnPause.value = false; 
-     showBtnPlay.value = false;
-     goTrailer.value = true;    
- }
- if (event.data == PlayerState.PAUSED) {
-  visTitle.value = true;
-  showBtnPause.value = true;
-   showBtnPlay.value = true;
-  goTrailer.value = false;
- }   
-    
-})
-
-onReady((event) => {
- eventTarget.value = event.target
-})
-
-watch(isVisTrailer, (oldVal, newVal) => {
- if (oldVal === true) {
-   eventTarget.value?.playVideo()
- }
- else if (newVal === true) {
-   eventTarget.value?.stopVideo()
- }
-    
 })
 
 const showPlayTrailer = () => {
@@ -100,16 +66,21 @@ const pausePlayVidio = () => {
 
 <template>
   <div class="modal-trailer" :class="{ 'modal--vis': isVisTrailer }">
-    <div class="modal__main-trailer" @mouseover="showPauseTrailer"   @mouseout="hiddenPauseTrailer" >
+    <div class="modal__main-trailer" @mouseover="showPauseTrailer"   @mouseout="hiddenPauseTrailer"  >
       <div class="modal__content-trailer" @mouseover="showPlayTrailer"   @mouseout="hiddenPlayTrailer" @focus="showPlayTrailer" @focusout="hiddenPlayTrailer">
-          <div ref="player"/>
+          <TrailerYoutube :idVideoY="idVideo" :tittleVideoY="tittleVideo"
+           @event="ev=> eventTarget = ev"
+           @btn-play="play => showBtnPlay = play"
+           @btn-pause="pause => showBtnPause = pause"
+           @go-trailer="go => goTrailer = go" 
+           @vis-title="title => visTitle = title"
+           />                    
            <h2 class="modal-trailer__title" v-show="visTitle"> {{ tittleVideo }}</h2>
-           
-           <span v-show="showBtnPause, !goTrailer" @click="pausePlayVidio"  class="modal-trailer__pause"><ButtonTrailerPause /></span>
-           <span v-show="showBtnPlay" @click="goPlayVidio" class="modal-trailer__play"><ButtonTrailerPlay /></span>
+            <span v-show="showBtnPause, !goTrailer" @click="pausePlayVidio"  class="modal-trailer__pause"><ButtonTrailerPause /></span>
+            <span v-show="showBtnPlay" @click="goPlayVidio" class="modal-trailer__play"><ButtonTrailerPlay /></span>        
            
       </div>
-      <CloseModal @click="modalCloseTrailer" class="modal__close" />
+      <CloseModal @click="modalCloseTrailer" class="modal__close--trailer" />
       
     </div>
   </div>

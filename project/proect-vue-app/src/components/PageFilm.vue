@@ -269,15 +269,20 @@ if (props.showBtn) {
 }
 
 
-const filmFavorites = async (val: string) => {    
-  if (favorite.value === 'favorite') {
+const filmFavorites = async (val: string) => {   
+  if (authorized.value) {
+      if (favorite.value === 'favorite') {
     await addFavorites(val.toString());
   }
-
   else if (favorite.value === 'favorite-add') {
     await delFavorites(val.toString());
   }
   addFaforites();
+  }  
+  else if (!authorized.value) {
+     useModalStore().modalVis();
+  }
+ 
 }
 
 const  checkedFavoeite =  (val: string) => {
@@ -322,8 +327,8 @@ const  checkedFavoeite =  (val: string) => {
               v-if="showBtnDefault"
             />
           </li>
-          <li v-if="authorized" class="film__item">
-            <BtnCircle :componentName="favorite" @click=" filmFavorites(promised.data.id)"/>
+          <li class="film__item">
+            <BtnCircle  :componentName="favorite" @click=" filmFavorites(promised.data.id)"/>
           </li>
           <li class="film__item s">
             <BtnCircle :componentName="cinemaGuide" v-if="showBtnDefault" @click="goNewFilm"/>
