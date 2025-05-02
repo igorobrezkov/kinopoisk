@@ -121,8 +121,6 @@ const arrFilms = computed(() => {
   });
 });
 
-
-
 const promised = usePromise(genreDetail.then(
   res => {
     if( res !== undefined)
@@ -131,9 +129,6 @@ const promised = usePromise(genreDetail.then(
 ))
 
 const startPagination = countFilmsShow.value + countFilmsShow.value
-
-
-
 const countFilms: any = () => {
   return (genreArr.value) ?  genreArr.value.length : startPagination;
 }

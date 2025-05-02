@@ -39,4 +39,14 @@ import Star from "../assets/images/svg-sprite/star_white.svg";
   line-height: 133%;
   color: #fff;
 }
+.search__rating .rating__desc {
+ font-weight: 700;
+ font-size: 12px;
+ line-height: 133%;
+ color: #fff;
+}
+.search__rating .rating_star{
+  width: 10px;
+  height: 10px;
+}
 </style>

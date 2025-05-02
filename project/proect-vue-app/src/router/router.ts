@@ -1,7 +1,6 @@
 
 import { createRouter, createWebHistory } from 'vue-router'
 
-
 const router = createRouter({
  history: createWebHistory('/'),
  routes: [
@@ -24,6 +23,13 @@ const router = createRouter({
    name: 'film',
    path: '/film/:id',
    component: () => import('../views/PageFilmView.vue'),
+   children: [
+    {
+     name: 'films',
+     path: '/film/:id',
+     component: () => import('../views/PageFilmView.vue'),
+    }
+   ]
   },
   {
    name: 'account',

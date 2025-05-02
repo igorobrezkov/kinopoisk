@@ -1,14 +1,15 @@
 <script setup lang='ts'>
 import PageFilm from "../components/PageFilm.vue";
 import FilmDescription from "../components/FilmDescription.vue";
-import { useRoute } from "vue-router";
+import { useRoute, } from "vue-router";
 import { ref } from "vue";
-const route = useRoute()
-const id = route.path.replace("/film/", "");
+const route = useRoute();
+const id = ref()
+ id.value = route.path.replace("/film/", "");
 const dataFilm = ref();
 let promiseId = new Promise<Number>((resolve, reject) => {
   let success = () => {
-       return parseInt(id)
+       return parseInt(id.value)
     };
     if (success()) {
         resolve(success()); 
@@ -16,8 +17,6 @@ let promiseId = new Promise<Number>((resolve, reject) => {
         reject("Произошла ошибка!"); 
     }
 });
-
-
 
 const changeFilm = (val: any) => {
   dataFilm.value = val;

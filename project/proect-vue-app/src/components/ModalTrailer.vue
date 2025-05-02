@@ -4,16 +4,17 @@ import { storeToRefs } from "pinia";
 import { ref, defineAsyncComponent, watch } from "vue"
 import CloseModal from "../assets/images/svg-sprite/close_modal.svg";
 import ButtonTrailerPause from "../assets/images/svg-sprite/trailer_pause.svg";
-import ButtonTrailerPlay from "../assets/images/svg-sprite/trailer_play.svg"
+import ButtonTrailerPlay from "../assets/images/svg-sprite/trailer_play.svg";
+import  ErrorLoadingTrailer from './Error.vue';
 import LoadingTrailer from "./LoadingTrailer.vue";
-import ErrorTrailer from "./ErrorTrailer.vue";
+
 
 
 const TrailerYoutube = defineAsyncComponent({
  loader: () => import('./YoutubeTrailer.vue'),
  loadingComponent: LoadingTrailer,
   delay: 200,
- errorComponent: ErrorTrailer,
+ errorComponent: ErrorLoadingTrailer,
  timeout: 3000
 }
 )

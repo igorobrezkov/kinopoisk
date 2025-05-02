@@ -21,7 +21,7 @@ idVideo.value =  props.idVideoY;
      iv_load_policy: 3,
      controls: 0,
       autoplay: 0, 
-      mute: 1, 
+      mute: 0, 
       showinfo: 0,
       playsinline: 0,
       modestbranding: 0,
