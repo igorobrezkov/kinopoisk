@@ -19,7 +19,7 @@ const promised = usePromise(top10);
       <h2 class="top-10__title">Топ 10 фильмов</h2>
       <ul class="top-10__list">
         <li class="top-10__item" :class="{'top-10__item--no-image': !film.backdropUrl && !film.posterUrl}" v-if="promised.data.value" v-for="(film, index) in arrFilms.data" :key="film?.id">
-          <router-link :to="{ name: 'film', params: { id: film.id }}" class="top-10__link">
+          <router-link :to="{path: '/film/'+film.id}" class="top-10__link">
             <img class="top-10__img" v-if="film.posterUrl" :src="film.posterUrl" alt="" />
             <img class="top-10__img" v-else-if="film.backdropUrl" :src="film.backdropUrl" alt="" />
             <span v-else class="top10-desc"> {{ film.title }}</span>

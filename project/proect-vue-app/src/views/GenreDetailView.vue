@@ -197,7 +197,7 @@ function moreFilmsShow() {
       {{ setGenreArr(promised.data.value) }}
       <ul class="genre__list">
         <li class="genre__item"   v-for="film in arrFilms" :key="film.id">
-          <router-link class="genre__link-item" :to="{ name: 'film', params: { id: film.id }}" >
+          <router-link class="genre__link-item" :to="{path: '/film/'+film.id}" >
             <img :src="film.posterUrl" />
           </router-link>
         </li>

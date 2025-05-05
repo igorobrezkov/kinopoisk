@@ -67,7 +67,7 @@ const film = async (id: Promise<Number>) => {
         case 'plot':
           function clampString(inputString: string, maxLength: number) {
             let regexp = new RegExp(`((.{${maxLength - 3}})...)(.+)`, "s");
-            return inputString.replace(regexp, (m, g1, g2, g3) => g3 ? g2 + "..." : g1);
+            return inputString.replace(regexp, (g1, g2, g3) => g3 ? g2 + "..." : g1);
           }
           if (typeof val == 'string') {
             const minVal = clampString(val, 65)

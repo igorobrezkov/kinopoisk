@@ -19,11 +19,10 @@ check.then(data => {
 }
 routerChecked();
 
-const exitAuth = () => {
-  logOut();
+const exitAuth = async () => {
+  await logOut();
   router.push({ name: 'main' });
 }
-
 </script>
 
 <template>

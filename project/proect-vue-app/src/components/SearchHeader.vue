@@ -72,7 +72,7 @@ const searchFilms = (event: any) => {
    />
         <ul class="search__list" v-show="arrLength">
              <li class="search__item" v-for="(item, index) in resArResult" v-show="index < 5" :key="item.id" >
-                <router-link class="genre__link-item" :to="{ name: 'film', params: { id: item.id }}" >
+                <router-link class="genre__link-item" :to="{path: '/film/'+item.id}" >
                <div class="search__wrap">
                   <img class="search__img" v-show="item.posterUrl" :src="item.posterUrl" alt="">
                   <div class="search__desc">
