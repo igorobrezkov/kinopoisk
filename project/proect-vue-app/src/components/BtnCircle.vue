@@ -7,19 +7,24 @@ defineProps({
 });
 </script>
 
-
 <template>
-  <button class="btn__circle" v-if="componentName == 'favorite'" type="button"
-    ><Favorite />
- </button>
- <span class="btn__circle" v-else-if="componentName == 'favorite-add'" type="button"
-    ><FavoriteAdd />
- </span>
+  <button class="btn__circle" v-if="componentName == 'favorite'" type="button">
+    <Favorite />
+  </button>
+  <button
+    class="btn__circle"
+    v-else-if="componentName == 'favorite-add'"
+    type="button"
+  >
+    <FavoriteAdd />
+  </button>
   <button
     class="btn__circle"
     v-else-if="componentName == 'cinema-guide'"
     type="button"
-    ><CinemaGuide/></button>
+  >
+    <CinemaGuide />
+  </button>
 </template>
 
 <style scoped>

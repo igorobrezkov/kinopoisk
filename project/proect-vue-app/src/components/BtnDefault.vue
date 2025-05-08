@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { useRouter } from "vue-router";
 const props = defineProps({
   text: String,
@@ -12,11 +11,10 @@ const routeToPush = () => {
 };
 </script>
 
-
 <template>
   <button class="btn__default" type="button" @click="routeToPush">
-    {{ text }}</button
-  >
+    {{ text }}
+  </button>
 </template>
 
 <style scoped>

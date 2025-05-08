@@ -155,8 +155,7 @@
   }
 
   &__link--account,
-  &__link--default,
-  ---default {
+  &__link---default {
    position: absolute;
    top: 25px;
    right: 0;
@@ -238,6 +237,10 @@
    justify-content: space-between;
   }
 
+  &__entry {
+   display: none;
+  }
+
   &__serach {
    width: 310px;
    position: absolute;
@@ -289,8 +292,9 @@
   &__list {
    padding-top: 0;
    justify-content: end;
+   align-items: center;
    gap: 0 40px;
-   margin-right: 45px;
+   margin-right: 40px;
   }
 
   &__logo {
@@ -303,13 +307,12 @@
   }
 
   &__link--genres {
-   &::before {
-    @include mixin.link-before();
-    background-image: url('/src/assets/images/svg-sprite/genres.svg');
-   }
+   @include mixin.link-before();
+   top: -5px;
+   background-image: url('/src/assets/images/svg-sprite/genres.svg');
   }
 
-  &__link--default,
+  &__link---default,
   &__link--account {
    top: 22px;
    width: 24px;
@@ -318,6 +321,8 @@
    &::before {
     @include mixin.link-before();
     background-image: url('/src/assets/images/svg-sprite/personal.svg');
+    opacity: 1;
+    outline: none;
    }
   }
 
@@ -328,6 +333,10 @@
    &::before {
     @include mixin.link-before();
     background-image: url('/src/assets/images/svg-sprite/search_white.svg');
+   }
+
+   &:focus-within::after {
+    outline: none;
    }
   }
  }
@@ -507,6 +516,10 @@
 
  .genre {
   @include mixin.genre();
+
+  &__item {
+   min-height: 467px;
+  }
  }
 
 

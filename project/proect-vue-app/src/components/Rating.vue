@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Star from "../assets/images/svg-sprite/star_white.svg";
- defineProps({
-   rating: String,
-})
+defineProps({
+  rating: String,
+});
 </script>
 
 <template>
-  <div class="rating" >
+  <div class="rating">
     <div class="rating__wrap">
       <Star class="rating_star" />
       <span class="rating__desc"> {{ rating }} </span>
@@ -40,12 +40,12 @@ import Star from "../assets/images/svg-sprite/star_white.svg";
   color: #fff;
 }
 .search__rating .rating__desc {
- font-weight: 700;
- font-size: 12px;
- line-height: 133%;
- color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 133%;
+  color: #fff;
 }
-.search__rating .rating_star{
+.search__rating .rating_star {
   width: 10px;
   height: 10px;
 }

@@ -4,9 +4,8 @@ defineProps({
 });
 </script>
 
-
 <template>
-  <button class="btn__accent" type="button"> {{ text }}</button>
+  <button class="btn__accent" type="button">{{ text }}</button>
 </template>
 
 <style scoped>
