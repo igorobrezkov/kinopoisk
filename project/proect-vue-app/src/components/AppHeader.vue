@@ -50,7 +50,7 @@ const routeToAutorized = async () => {
           <LogoWhite />
         </router-link>
         <MenuHeader @user="(msg: string) => changeEntry = msg"/>
-        <router-link  to="#" @click="routeToAutorized" :class="{ 'header__link' : authorized, 'header__link--account' : !authorized }">
+        <router-link  to="#" @click="routeToAutorized" :class="{ 'header__link' : authorized, 'header__link--default' : authorized, 'header__link--account' : !authorized }">
           {{ changeEntry }}
         </router-link>
         <Modal @user="(msg: string) => changeEntry = msg"/>

@@ -8,7 +8,7 @@ defineProps({
 
 <template>
   <div class="genre">
-    <router-link :to="'genres/' + detailGenreId">
+    <router-link :to="'genres/' + detailGenreId" class="genres__link">
       <img class="genre__img" :src="imgSrc" :alt="nameGenre" />
       <p class="genre__name">{{ nameGenre }}</p>
     </router-link>

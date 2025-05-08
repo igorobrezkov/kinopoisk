@@ -239,7 +239,7 @@ const modalVis = () => {
             class="modal__input modal__input--email"
             :class="{ 'modal__input--error' : inputEmailError, 'modal__email--error' : inputEmailError}"
             v-model="inputEmail" @input="clearValidInput"
-            v-show="!registrationOk"
+            v-if="!registrationOk"
           />
           <span class="form__error">{{ errEmail }}</span>
           <input
@@ -248,7 +248,7 @@ const modalVis = () => {
             class="modal__input modal__input--user"
             :class="{ 'modal__input--error' : inputNameError, 'modal__user--error' : inputNameError}"
             v-model="inputName" @input="clearValidInput"
-            v-show="isRegistration && !registrationOk"
+            v-if="isRegistration && !registrationOk"
           />
           <input
             type="text"
@@ -256,7 +256,7 @@ const modalVis = () => {
             class="modal__input modal__input--user"
             :class="{ 'modal__input--error' : inputLastNameError, 'modal__user--error' : inputLastNameError}"
             v-model="inputLastName" @input="clearValidInput"
-            v-show="isRegistration && !registrationOk"
+            v-if="isRegistration && !registrationOk"
           />
           <input
             type="password"
@@ -264,7 +264,7 @@ const modalVis = () => {
             class="modal__input modal__input--pass"
              :class="{ 'modal__input--error' : inputPassError, 'modal__pass--error' : inputPassError}"
             v-model="inputPass"  @input="clearValidInput"
-            v-show="!registrationOk"
+            v-if="!registrationOk"
           />
           <span class="form__error">{{ errPass }}</span>
            <input
@@ -274,15 +274,15 @@ const modalVis = () => {
              :class="{ 'modal__input--error' : inputPassConfirmError, 'modal__pass--error' : inputPassConfirmError}"
             v-model="inputPassConfirm"
             @input="clearValidInput"
-            v-show="isRegistration && !registrationOk"
+            v-if="isRegistration && !registrationOk"
           />
           <span class="form__error">{{ errPassConfirm }}</span>
           <span class="form__error">{{ errAuth }}</span>
         </form>
         <BtnAccent :text="text" @click="formSend" v-if="!registrationOk"/>
         <BtnAccent :text="text" @click="auth" v-else-if="registrationOk"/>
-        <span v-show="!isRegistration" class="modal__registration modal__registration--name" @click="registration">Регистрация</span>
-        <span v-show="isRegistration && !registrationOk" class="modal__registration modal__registration--name" @click="auth">У меня есть пароль</span>
+        <span v-if="!isRegistration" class="modal__registration modal__registration--name" @click="registration">Регистрация</span>
+        <span v-if="isRegistration && !registrationOk" class="modal__registration modal__registration--name" @click="auth">У меня есть пароль</span>
       </div>
 
       <CloseModal @click="modalVis" class="modal__close" />
@@ -295,6 +295,7 @@ const modalVis = () => {
 .form__error {
   color:  #ff7575;
   text-align: center;
+  margin-bottom: -12px;
 }
 
 .none {

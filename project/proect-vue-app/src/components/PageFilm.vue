@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref  } from "vue";
+import { ref } from "vue";
 import Rating from "./Rating.vue";
 import BtnAccent from "./BtnAccent.vue";
 import BtnDefault from "./BtnDefault.vue";
@@ -14,7 +14,7 @@ import { useAuthorizedStore } from "../stores/autorized";
 import { useFavoritesStore } from "../stores/favorites";
 import ModalTrailer from "./ModalTrailer.vue";
 import { useModalStore } from "../stores/modal";
-import {getStyle, toHoursAndMinutes, genre, getGenreTitle, genreTitle} from "../api/function"
+import { getStyle, toHoursAndMinutes, genre, getGenreTitle, genreTitle } from "../api/function";
 const { isVisTrailer } = storeToRefs(useModalStore());
 
 const goVideoTrailer = () => {
@@ -29,6 +29,7 @@ const valueBtnAccent = ref("Трейлер");
 const valueBtnDefault = ref("О фильме");
 const favorite = ref("favorite");
 const cinemaGuide = "cinema-guide";
+
 
 addFaforites();
 const props = defineProps({
@@ -181,12 +182,12 @@ const  checkedFavoeite =  (val: string) => {
     return isFavorites(val);
   } 
 }
-
 </script>
 
 <template>
+  <span class="none" >{{ checkedFavoeite(promised.data?.id) }} </span>
   <div class="film" >
-     {{ checkedFavoeite(promised.data?.id) }}  
+      
     <div class="film__wrap">
       <div class="film__content" >
         <ul class="rating" >
@@ -202,7 +203,7 @@ const  checkedFavoeite =  (val: string) => {
           {{ promised.data?.descPlot }}
         </p>
         <ul class="film__navigation">
-          <li class="film__item">
+          <li class="film__item film__item--trailer">
             <BtnAccent :text="valueBtnAccent"  @click="goVideoTrailer"/>
             <ModalTrailer v-if="promised.data?.trailerYouTubeId" :idVideo="promised.data?.trailerYouTubeId" :tittleVideo="promised.data?.title"/>
           </li>
@@ -221,7 +222,7 @@ const  checkedFavoeite =  (val: string) => {
           </li>
         </ul>
       </div>
-      <div class="film__item">
+      <div class="film__item" v-if="promised.data?.posterUrl">
         <img v-if="promised"
           class="film__preview-img"
           :src="promised.data?.posterUrl"

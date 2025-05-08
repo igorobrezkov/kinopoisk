@@ -32,8 +32,6 @@ const hidClose = (id: string) => {
   document.getElementById(id)?.classList.remove("favorites__item--vis") 
 } 
 }
-
-console.log(promised.data);
 </script>
 
 <template>

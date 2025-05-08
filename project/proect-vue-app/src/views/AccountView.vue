@@ -9,10 +9,7 @@ const BtnAccentValue = "Выйти из аккаунта";
 function  routerChecked() {
   const check = checked();
 check.then(data => {
-  if(data !== "Войти") {
-     router.push({ name: 'favorites' });
-  }
-  else {
+  if(data === "Войти") {
      router.push({ name: 'main' });
   }
 })
@@ -23,6 +20,9 @@ const exitAuth = async () => {
   await logOut();
   router.push({ name: 'main' });
 }
+
+
+
 </script>
 
 <template>
@@ -35,7 +35,7 @@ const exitAuth = async () => {
      <div class="account__wrapper wrapper">
        <router-view/>
      </div>
-     <BtnAccent :text="BtnAccentValue" @click="exitAuth"/>
+     <BtnAccent :text="BtnAccentValue" @click="exitAuth" class="btn__accent--logout"/>
    </div>
   </section>
 </template>

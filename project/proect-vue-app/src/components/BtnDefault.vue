@@ -14,27 +14,10 @@ const routeToPush = () => {
 
 
 <template>
-  <span class="btn__default" type="button" @click="routeToPush">
-    {{ text }}</span
+  <button class="btn__default" type="button" @click="routeToPush">
+    {{ text }}</button
   >
 </template>
 
 <style scoped>
-.btn__default {
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 28px;
-  padding: 16px 48px;
-  background: #393b3c;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 133%;
-  color: #fff;
-  transition: background-color .3s;
-  &:hover {
-    background-color: #45526e;
-  }
-}
-.btn__default:hover {
-  cursor: pointer;
-}
 </style>

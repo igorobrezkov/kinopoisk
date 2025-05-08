@@ -7,16 +7,25 @@ import Rating from "./Rating.vue";
  const resArResult = ref();
 const arrLength = ref(false);
 const inputValue = ref('');
-const emits = defineEmits(['search-close', 'is-vis']);
+const emits = defineEmits(['search-close', 'is-vis', 'input-value']);
 const props = defineProps({
-  closeClick: Boolean
+  closeClick: Boolean,
 })
 
 watch(props, () => {
   if (props.closeClick === false)
     resArResult.value = [];
-  emits('is-vis', true);
+    emits('is-vis', true);
     inputValue.value = ''
+})
+
+watch(inputValue, (inputVal) => {
+  if (inputVal.length > 0) {
+     emits('input-value', true)
+  }
+  else if (inputVal.length < 1) {
+     emits('input-value', false)
+   }
 })
 
 const addGenre = (arr: any) => {
@@ -42,8 +51,6 @@ watch(resArResult, (val) => {
   setArrLength();
   emits('search-close', arrLength.value)
 })
-
-
 
 const searchFilms = (event: any) => {
    resArResult.value = []
@@ -92,77 +99,4 @@ const searchFilms = (event: any) => {
 </template>
 
 <style scoped>
-.search__img {
-  width: 40px;
-  height: 52px;
-}
-.search__wrap {
-  display: flex;
-  gap: 0 16px;
-}
-.search__desc {
-  display: flex;
-  flex-direction: column;
-  gap: 8px 0;
-}
- .search__list {
-  margin: 0;
-  padding: 0;
-  border-radius: 8px;
-  padding: 8px;
-  width: 559px;
-  position: absolute;
-  top: 60px;
-  right: 0;
-  background: #393b3c;
-  z-index: 9;
- }
- .search__list-info {
-  display: flex;
-  gap: 0 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
- }
-.search__item {
- padding: 20px 8px;
- transition:  border .3s;
-}
-.search__item:hover {
- cursor: pointer;
- border: 1px solid rgba(255, 255, 255, 0.5);
- border-radius: 6px
-}
-.search__title {
- margin: 0;
- font-weight: 700;
- font-size: 18px;
- line-height: 133%;
- color: #fff
-}
-.search__rating {
- padding: 2px 8px;
- height: 20px;
-}
-.search__item-info--release,
-.search__item-info--genres,
-.search__item-info--runtime {
-font-weight: 400;
-font-size: 14px;
-line-height: 143%;
-color: rgba(255, 255, 255, 0.7);
-}
-
-.yelow {
-    background-color: #A59400;
-  }
-  .green {
-    background-color: #308e21;
-  }
-  .gray {
-    background-color: #777777;
-  }
-  .red {
-    background-color: #C82020;
-  }
 </style>
