@@ -13,7 +13,7 @@ const TrailerYoutube = defineAsyncComponent({
   loadingComponent: LoadingTrailer,
   delay: 200,
   errorComponent: ErrorLoadingTrailer,
-  timeout: 3000,
+  timeout: 3000, git status
 });
 
 const youtubeIsLoadding = ref(false);
