@@ -39,6 +39,8 @@ const routeToAutorized = async () => {
   }
 };
 
+routeToAutorized();
+
 function resizeMenu(screen: number) {
   if (screen <= 590) {
     changeEntry.value = "";
