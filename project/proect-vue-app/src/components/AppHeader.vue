@@ -39,8 +39,6 @@ const routeToAutorized = async () => {
   }
 };
 
-routeToAutorized();
-
 function resizeMenu(screen: number) {
   if (screen <= 590) {
     changeEntry.value = "";
@@ -74,7 +72,7 @@ onMounted(() => {
         </router-link>
         <MenuHeader @user="(msg: string) => changeEntry = msg" />
         <router-link
-          to="#"
+          to="/"
           @click="routeToAutorized"
           :class="{
             header__link: authorized,
